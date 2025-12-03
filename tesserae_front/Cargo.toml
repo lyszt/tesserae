@@ -1,6 +1,20 @@
 [package]
-name = "tesserae"
-version = "0.1.0"
+name = "tesserae-core"
+version = "0.2.1061-nightly"
 edition = "2024"
 
+[lib]
+crate-type = ["cdylib"]
+
 [dependencies]
+serde = "*"
+wasm-bindgen = { git = "https://github.com/rustwasm/wasm-bindgen", branch = "main" }
+
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-O4", "--enable-simd"]
+
+
+
+
+
