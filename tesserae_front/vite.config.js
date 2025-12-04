@@ -3,6 +3,7 @@ import solid from 'vite-plugin-solid'
 import { compression } from 'vite-plugin-compression2'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 import { visualizer } from 'rollup-plugin-visualizer'
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   // We assume users have modern browsers. This removes polyfills.
@@ -30,6 +31,7 @@ export default defineConfig({
 
   plugins: [
     solid(),
+    tailwindcss(),
     
     // 4. Image Optimizer
     // Optimizes SVG, PNG, JPG at build time.
