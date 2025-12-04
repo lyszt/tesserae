@@ -4,6 +4,7 @@ import { compression } from 'vite-plugin-compression2'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 import { visualizer } from 'rollup-plugin-visualizer'
 import tailwindcss from '@tailwindcss/vite';
+import path from 'path'
 
 export default defineConfig({
   // We assume users have modern browsers. This removes polyfills.
@@ -15,6 +16,13 @@ export default defineConfig({
     minify: 'esbuild', // Fast and effective for JS
     cssMinify: 'lightningcss', // 2. Use LightningCSS (Rust) for styles. Better than esbuild.
     reportCompressedSize: true, // Let's see the savings
+  },
+
+  // Resolve aliases for editor and bundler path mapping
+  resolve: {
+    alias: [
+      { find: '@', replacement: path.resolve(__dirname, 'src') }
+    ]
   },
 
   // 3. LightningCSS Configuration
