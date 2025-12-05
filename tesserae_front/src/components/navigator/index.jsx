@@ -26,7 +26,6 @@ export default function Navigator() {
       
         <NavigationMenuItem>
           <NavigationMenuTrigger className="gap-3">
-            <HomeOutlinedIcon color="#5a5f73"/>
             Home
           </NavigationMenuTrigger>
           <NavigationMenuContent>
