@@ -15,9 +15,6 @@ export function AppstoreOutlinedIcon({
       viewBox="0 0 1024 1024"
       fill="none"
       stroke="none"
-      strokeWidth={strokeWidth}
-      strokeLinecap="round"
-      strokeLinejoin="round"
       className={className}
       style={{ fill: color }}
       {...props}>
