@@ -14,6 +14,7 @@ import { CodeOutlinedIcon } from "@/components/ui/icons/ant-design-code-outlined
 import { CoffeeOutlinedIcon } from "@/components/ui/icons/ant-design-coffee-outlined";
 import { GithubOutlinedIcon } from "@/components/ui/icons/ant-design-github-outlined";
 import { FunctionOutlinedIcon } from "@/components/ui/icons/ant-design-function-outlined";
+import MusicPlayer from "@/components/music-player";
 
 export default function Navigator() {
  
@@ -77,6 +78,7 @@ export default function Navigator() {
 
 
       </NavigationMenuList>
+      <MusicPlayer />
     </NavigationMenu>
   );
 }
