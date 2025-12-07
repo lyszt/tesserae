@@ -8,41 +8,74 @@ const ARTIST_NAME = "Clair Obscur: Expedition 33";
 
 export default function MusicPlayer() {
   const [isPlaying, setIsPlaying] = createSignal(false);
-  const [currentTime, setCurrentTime] = createSignal(0);
-
-  let audioPlayer;
   
+  let audioPlayer;
+  let rafId;
+  let minRef, secRef;
 
-  const handleTimeUpdate = () => {
-    if (audioPlayer) {
-      setCurrentTime(audioPlayer.currentTime);
+  // CPU Cache
+  let lastIntT = -1;
+  let lastM = -1;
+
+  const renderLoop = () => {
+    if (!audioPlayer) return;
+
+    const t = audioPlayer.currentTime;
+    
+
+    const intT = ~~t;
+
+    if (intT !== lastIntT) {
+      lastIntT = intT;
+
+      let m = 0;
+      
+      // Since we know the song is short, we check thresholds manually.
+      if (intT >= 120) m = 2; // 2:00+
+      else if (intT >= 60)  m = 1; // 1:00+
+      
+      if (m !== lastM) {
+        lastM = m;
+        minRef.textContent = m;
+      }
+
+      // Calculate Seconds via Subtraction/Multiplication
+      // s = intT - (m * 60); <-- Fast Multiply/Subtract
+      const s = intT - (m * 60);
+      
+      secRef.textContent = s < 10 ? '0' + s : s;
+    }
+
+    if (!audioPlayer.paused) {
+      rafId = requestAnimationFrame(renderLoop);
     }
   };
 
   const handleSongEnd = () => {
     setIsPlaying(false);
-    setCurrentTime(0);
-  };
-
-  const formatTime = (timeInSeconds) => {
-    const minutes = ~~(timeInSeconds / 60);
-    const seconds = timeInSeconds % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    cancelAnimationFrame(rafId);
+    
+    // Reset Logic
+    lastIntT = -1;
+    lastM = -1;
+    if (minRef) minRef.textContent = "0";
+    if (secRef) secRef.textContent = "00";
   };
 
   const toggleMusicTheme = () => {
     if (isPlaying()) {
       audioPlayer.pause();
+      cancelAnimationFrame(rafId);
     } else {
       audioPlayer.play();
+      rafId = requestAnimationFrame(renderLoop);
     }
     setIsPlaying(!isPlaying());
   };
 
   onCleanup(() => {
-    if (audioPlayer) {
-      audioPlayer.pause();
-    }
+    if (audioPlayer) audioPlayer.pause();
+    cancelAnimationFrame(rafId);
   });
 
   return (
@@ -59,8 +92,8 @@ export default function MusicPlayer() {
           )}
           <audio
             ref={audioPlayer}
-            onTimeUpdate={handleTimeUpdate}
             onEnded={handleSongEnd}
+            preload="none"
           >
             <source src={childrenOfLumiere} type="audio/mpeg" />
           </audio>
@@ -69,7 +102,10 @@ export default function MusicPlayer() {
 
       <div class="flex flex-col justify-start items-start text-left text-[.7em] w-[70%] text-black">
         <span>{SONG_NAME} - {ARTIST_NAME}</span>
-        <span class="text-xs">{formatTime(currentTime())}</span>
+        
+        <div class="text-xs font-mono min-w-[80px]">
+           <span ref={minRef}>0</span>:<span ref={secRef}>00</span>
+        </div>
       </div>
     </div>
   );
