@@ -3,13 +3,15 @@ import { PlayCircleOutlinedIcon } from '@/components/ui/icons/ant-design-play-ci
 import { PauseOutlinedIcon } from '@/components/ui/icons/ant-design-pause-outlined';
 import childrenOfLumiere from '@/assets/audios/music/childrenoflumiere.mp3';
 
+const SONG_NAME = "Children of Lumière";
+const ARTIST_NAME = "Clair Obscur: Expedition 33";
+
 export default function MusicPlayer() {
   const [isPlaying, setIsPlaying] = createSignal(false);
   const [currentTime, setCurrentTime] = createSignal(0);
 
   let audioPlayer;
-  const songName = "Children of Lumière";
-  const artistName = "Clair Obscur: Expedition 33";
+  
 
   const handleTimeUpdate = () => {
     if (audioPlayer) {
@@ -23,8 +25,8 @@ export default function MusicPlayer() {
   };
 
   const formatTime = (timeInSeconds) => {
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = Math.floor(timeInSeconds % 60);
+    const minutes = ~~(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
@@ -66,7 +68,7 @@ export default function MusicPlayer() {
       </div>
 
       <div class="flex flex-col justify-start items-start text-left text-[.7em] w-[70%] text-black">
-        <span>{songName} - {artistName}</span>
+        <span>{SONG_NAME} - {ARTIST_NAME}</span>
         <span class="text-xs">{formatTime(currentTime())}</span>
       </div>
     </div>
