@@ -1,13 +1,17 @@
 
 import './App.css'
 import Navigator from './components/navigator';
+import Home from './pages/home/home';
+import { createSignal } from 'solid-js';
 
 function App() {
-  // const [count, setCount] = createSignal(0)
+  const [home, setHome] = createSignal(true)
 
   return (
     <main> 
       <Navigator/>
+      {home && <Home/>}
+      
     </main>
   )
 }
