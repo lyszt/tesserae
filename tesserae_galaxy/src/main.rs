@@ -20,4 +20,8 @@ fn handle_connection(mut stream: TcpStream) {
         "Request: {}",
         String::from_utf8_lossy(&buffer[..])
     );
+
+    let response = "HTTP/1.1 200 OK\r\n\r\n";
+    stream.write(response.as_bytes()).unwrap();
+    stream.flush().unwrap();
 }
