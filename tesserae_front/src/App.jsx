@@ -2,16 +2,21 @@
 import './App.css'
 import Navigator from './components/navigator';
 import Home from './pages/home/home';
+import AuthenticationPage from './pages/authentication';
 import { createSignal } from 'solid-js';
 
 function App() {
   const [home, setHome] = createSignal(true)
+  const [loginScreen, setLoginScreen] = createSignal(false);
+  const [auth, setAuth] = createSignal(false);
 
   return (
-    <main> 
-      <Navigator/>
-      {home && <Home/>}
-      
+    <main>
+      {!loginScreen() && <Navigator setLoginScreen={setLoginScreen}/>}
+      {!loginScreen() && home() && <Home/>}
+      {loginScreen() && <AuthenticationPage setAuth={setAuth}/>}
+
+      { /* Footer */}
     </main>
   )
 }

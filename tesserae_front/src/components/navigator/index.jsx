@@ -8,6 +8,7 @@ import {
   NavigationMenuTrigger,
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
+import { Button } from "@/components/ui/button";
 import { InfoOutlinedIcon } from "@/components/ui/icons/ant-design-info-outlined";
 import { CodeOutlinedIcon } from "@/components/ui/icons/ant-design-code-outlined";
 import { CoffeeOutlinedIcon } from "@/components/ui/icons/ant-design-coffee-outlined";
@@ -18,7 +19,7 @@ import { LoginOutlinedIcon } from "@/components/ui/icons/ant-design-login-outlin
 // Music player was removed for multiple reasons,
 // Including avoiding copyright and that it was sort of useless
 
-export default function Navigator() {
+export default function Navigator({setLoginScreen}) {
  
 
   return (
@@ -77,15 +78,13 @@ export default function Navigator() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="gap-3 bg-slate-900 text-white hover:bg-slate-800 hover:text-white" showChevron={false}>
-            <LoginOutlinedIcon color="#ffffff"/>
-            Login
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <NavigationMenuLink>Link</NavigationMenuLink>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+        <Button
+          onClick={() => setLoginScreen(true)}
+          className="bg-slate-900 text-white hover:bg-slate-800 ml-2"
+        >
+          <LoginOutlinedIcon color="#ffffff" />
+          Login
+        </Button>
 
 
       </NavigationMenuList>
