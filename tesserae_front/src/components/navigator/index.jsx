@@ -50,7 +50,7 @@ export default function Navigator({setLoginScreen}) {
          <NavigationMenuItem>
           <NavigationMenuTrigger className="gap-3">
             <CodeOutlinedIcon color="#5a5f73"/>
-            Projects
+            Labs
             </NavigationMenuTrigger>
           <NavigationMenuContent>
             <NavigationMenuLink>Link</NavigationMenuLink>
@@ -71,7 +71,7 @@ export default function Navigator({setLoginScreen}) {
         <NavigationMenuItem>
           <NavigationMenuTrigger className="gap-3">
             <FunctionOutlinedIcon color="#5a5f73"/>
-            Public Utility
+            Toolkit
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <NavigationMenuLink>Link</NavigationMenuLink>
