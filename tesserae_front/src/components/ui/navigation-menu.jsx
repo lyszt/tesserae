@@ -42,7 +42,7 @@ function ChevronDown({ className }) {
   )
 }
 
-function NavigationMenuTrigger({ className, children, ...props }) {
+function NavigationMenuTrigger({ className, children, showChevron = true, ...props }) {
   const ctx = useContext(ItemContext)
   return (
     <button
@@ -52,9 +52,11 @@ function NavigationMenuTrigger({ className, children, ...props }) {
       {...props}
     >
       {children}
-      <span style={{ "margin-left": "6px" }}>
-        <ChevronDown className="relative top-[1px] size-3 transition duration-300" />
-      </span>
+      {showChevron && (
+        <span style={{ "margin-left": "6px" }}>
+          <ChevronDown className="relative top-[1px] size-3 transition duration-300" />
+        </span>
+      )}
     </button>
   )
 }

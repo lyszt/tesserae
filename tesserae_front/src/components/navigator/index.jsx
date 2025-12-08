@@ -8,13 +8,15 @@ import {
   NavigationMenuTrigger,
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
-import { HomeOutlinedIcon } from "@/components/ui/icons/ant-design-home-outlined";
 import { InfoOutlinedIcon } from "@/components/ui/icons/ant-design-info-outlined";
 import { CodeOutlinedIcon } from "@/components/ui/icons/ant-design-code-outlined";
 import { CoffeeOutlinedIcon } from "@/components/ui/icons/ant-design-coffee-outlined";
-import { GithubOutlinedIcon } from "@/components/ui/icons/ant-design-github-outlined";
 import { FunctionOutlinedIcon } from "@/components/ui/icons/ant-design-function-outlined";
-import MusicPlayer from "@/components/music-player";
+import { LoginOutlinedIcon } from "@/components/ui/icons/ant-design-login-outlined";
+
+
+// Music player was removed for multiple reasons,
+// Including avoiding copyright and that it was sort of useless
 
 export default function Navigator() {
  
@@ -75,9 +77,18 @@ export default function Navigator() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="gap-3 bg-slate-900 text-white hover:bg-slate-800 hover:text-white" showChevron={false}>
+            <LoginOutlinedIcon color="#ffffff"/>
+            Login
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <NavigationMenuLink>Link</NavigationMenuLink>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
 
       </NavigationMenuList>
-      <MusicPlayer />
     </NavigationMenu>
   );
 }

@@ -89,7 +89,9 @@ export default function MusicPlayer() {
         </button>
       </div>
 
-      <div class="flex flex-col justify-start text-black leading-tight items-start text-left text-[.7em] w-[70%]">
+      <div class="flex flex-col justify-start
+       text-black leading-tight items-start 
+       text-left text-[.7em] w-[70%]">
         <span>{SONG_NAME} - {ARTIST_NAME}</span>
         
         <div class="text-xs leading-tightfont-mono min-w-[80px] text-black tabular-nums">

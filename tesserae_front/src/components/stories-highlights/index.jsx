@@ -11,11 +11,13 @@ export default function Highlights() {
     flex">
         <div className="bg-gray-100 w-[50%]"></div>
         <div className="w-[50%]">
-            {posts.map((post) => {
+            <For each={posts()}>
+                {post => 
                 <li>
-                
-                </li>
-            })}
+                    {post.title}
+                    {post.description}      
+                </li>}
+            </For>
         </div>
     </section>
     );
