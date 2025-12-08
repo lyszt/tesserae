@@ -1,4 +1,4 @@
-defmodule TesseraeServer.AccountController do
+defmodule TesseraeServerWeb.AccountController do
   use TesseraeServerWeb, :controller
   alias TesseraeServer.Accounts
 
