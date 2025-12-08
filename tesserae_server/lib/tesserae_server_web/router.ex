@@ -21,9 +21,16 @@ defmodule TesseraeServerWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", TesseraeServerWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", TesseraeServerWeb do
+     pipe_through :api
+  end
+
+  scope "/auth", TesseraeServerWeb do
+     pipe_through :api
+
+     post("/register", AccountController, :create)
+
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:tesserae_server, :dev_routes) do
@@ -40,5 +47,6 @@ defmodule TesseraeServerWeb.Router do
       live_dashboard "/dashboard", metrics: TesseraeServerWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+
   end
 end
