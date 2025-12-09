@@ -122,7 +122,6 @@ defmodule TesseraeServer.Tokens do
   end
 
 
-  def create_token_for(account_or_id, type, expires_in_opts \\ [hours: 24])
 
   def create_token_for(%Account{} = account, type, expires_in_opts) do
     hash = generate_token()
