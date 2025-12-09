@@ -3,6 +3,8 @@ defmodule TesseraeServer.Tokens.Token do
   import Ecto.Changeset
   alias TesseraeServer.Accounts.Account
 
+  @derive {Jason.Encoder, only: [:hash, :type, :expires_at]}
+
   schema "tokens" do
     field :hash, :string
     field :type, :string

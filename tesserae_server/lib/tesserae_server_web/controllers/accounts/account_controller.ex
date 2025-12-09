@@ -71,11 +71,11 @@ defmodule TesseraeServerWeb.Accounts.AccountController do
             conn
             |> put_status(:ok)
             |> json(%{
+              token: token,
               user: %{
                 username: account.username,
                 email: account.email,
-                permissions: account.permission_group,
-                token: token.hash
+                permissions: account.permission_group
               }
             })
 
@@ -97,7 +97,14 @@ defmodule TesseraeServerWeb.Accounts.AccountController do
 
             conn
             |> put_status(:created)
-            |> json(%{username: account.username, email: account.email, permissions: account.permissions, token: token.hash})
+            |> json(%{
+              token: token,
+              user: %{
+                username: account.username,
+                email: account.email,
+                permissions: account.permission_group
+              }
+            })
 
           {:error, changeset} ->
             errors = Ecto.Changeset.traverse_errors(changeset, fn {msg, _opts} -> msg end)
