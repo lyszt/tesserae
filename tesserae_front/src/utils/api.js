@@ -2,7 +2,7 @@
 
 import Network from '../lib/network/Network'
 
-const API_BASE_URL = 'http://127.0.0.1:5000/api/'
+const API_BASE_URL = 'http://127.0.0.1:4000/api/'
 
 // Cria instância do Network com configuração base
 const network = new Network({
@@ -13,13 +13,15 @@ const network = new Network({
 // Exporta instância do Network para uso externo
 export { network }
 
-// Recupera token JWT do localStorage
+// Recupera token JWT do localStorage (SSR-safe)
 export function getToken() {
+    if (typeof window === 'undefined') return null
     return localStorage.getItem('token_acesso')
 }
 
 // Armazena token JWT no localStorage (mantém sessão ativa)
 export function setToken(token) {
+    if (typeof window === 'undefined') return
     if (token) {
         localStorage.setItem('token_acesso', token)
     }
@@ -27,6 +29,7 @@ export function setToken(token) {
 
 // Remove token do localStorage (efetua logout)
 export function removeToken() {
+    if (typeof window === 'undefined') return
     localStorage.removeItem('token_acesso')
 }
 

@@ -23,13 +23,11 @@ defmodule TesseraeServerWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", TesseraeServerWeb do
      pipe_through :api
-  end
 
-  scope "/auth", TesseraeServerWeb do
-     pipe_through :api
-
-     post("/register", AccountController, :create)
-
+     scope "/auth" do
+       post("/register", AccountController, :create)
+       post("/login", AccountController, :login)
+     end
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

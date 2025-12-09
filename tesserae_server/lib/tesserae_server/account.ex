@@ -30,6 +30,7 @@ defmodule TesseraeServer.Account do
       |> validate_required([
           :username
         ])
+      |> EctoCommons.EmailValidator.validate_email(:email)
       |> validate_provider_password()
       |> foreign_key_constraint(:permission_group_id)
 

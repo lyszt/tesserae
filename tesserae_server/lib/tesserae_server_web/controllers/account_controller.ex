@@ -20,11 +20,6 @@ defmodule TesseraeServerWeb.AccountController do
         |> put_status(:bad_request)
         |> json(%{errors: "O campo de email não pode estar vazio."})
 
-      !EctoCommons.EmailValidator.valid?(params["email"]) ->
-        conn
-        |> put_status(:bad_request)
-        |> json(%{errors: "Email inválido."})
-
       is_nil(params["password"]) ->
         conn
         |> put_status(:bad_request)
@@ -89,8 +84,9 @@ defmodule TesseraeServerWeb.AccountController do
     end
   end
 
+  # params here uses atom keys because it comes from user_params built in create/2
   defp create_with_params(conn, params) do
-    case Accounts.get_account_by_username(params["username"]) do
+    case Accounts.get_account_by_username(params[:username]) do
       nil ->
         case Accounts.create_account(params) do
           {:ok, account} ->

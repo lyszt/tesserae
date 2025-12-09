@@ -1,3 +1,4 @@
+import { A } from "@solidjs/router";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -19,7 +20,7 @@ import { LoginOutlinedIcon } from "@/components/ui/icons/ant-design-login-outlin
 // Music player was removed for multiple reasons,
 // Including avoiding copyright and that it was sort of useless
 
-export default function Navigator({setLoginScreen}) {
+export default function Navigator() {
  
 
   return (
@@ -78,13 +79,12 @@ export default function Navigator({setLoginScreen}) {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <Button
-          onClick={() => setLoginScreen(true)}
-          className="bg-slate-900 text-white hover:bg-slate-800 ml-2"
-        >
-          <LoginOutlinedIcon color="#ffffff" />
-          Login
-        </Button>
+        <A href="/auth">
+          <Button className="bg-slate-900 text-white hover:bg-slate-800 ml-2">
+            <LoginOutlinedIcon color="#ffffff" />
+            Login
+          </Button>
+        </A>
 
 
       </NavigationMenuList>

@@ -41,6 +41,7 @@ defmodule TesseraeServer.MixProject do
   defp deps do
     [
       {:argon2_elixir, "~> 4.1.3"},
+      {:cors_plug, "~> 3.0"},
       {:phoenix, "~> 1.8.2"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_commons, "~> 0.3.4"},
