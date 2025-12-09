@@ -14,7 +14,7 @@ function App() {
     <main>
       {!loginScreen() && <Navigator setLoginScreen={setLoginScreen}/>}
       {!loginScreen() && home() && <Home/>}
-      {loginScreen() && <AuthenticationPage setAuth={setAuth}/>}
+      {loginScreen() && <AuthenticationPage setLoginScreen={setLoginScreen} setAuth={setAuth}/>}
 
       { /* Footer */}
     </main>
