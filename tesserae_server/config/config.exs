@@ -16,7 +16,7 @@ config :tesserae_server, TesseraeServerWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: TesseraeServerWeb.ErrorHTML, json: TesseraeServerWeb.ErrorJSON],
+    formats: [html: TesseraeServerWeb.Errors.ErrorHTML, json: TesseraeServerWeb.Errors.ErrorJSON],
     layout: false
   ],
   pubsub_server: TesseraeServer.PubSub,

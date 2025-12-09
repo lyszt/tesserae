@@ -1,4 +1,4 @@
-defmodule TesseraeServerWeb.PageController do
+defmodule TesseraeServerWeb.Pages.PageController do
   use TesseraeServerWeb, :controller
 
   def home(conn, _params) do

@@ -25,7 +25,7 @@ async function sendRegisterData(username, password, email) {
             }
 
             // Se o erro não for interno, manda a mensagem do servidor
-            const serverMsg = err.response?.body || 'Erro ao registrar.'
+            const serverMsg = err.response?.errors || 'Erro ao registrar.'
             return { success: false, status: err.status, message: String(serverMsg) }
         }
         // Loga outros erros mas não expõe detalhes ao usuário

@@ -7,7 +7,7 @@ export default function Auth() {
 
   return (
     <main>
-      <Title>Tesserae - Authentication</Title>
+      <Title>LYSZT - Authentication</Title>
       <AuthenticationPage
         setLoginScreen={() => navigate("/")}
         setAuth={() => {}}

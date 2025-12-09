@@ -17,7 +17,7 @@ defmodule TesseraeServerWeb.Router do
   scope "/", TesseraeServerWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", Pages.PageController, :home
   end
 
   # Other scopes may use custom stacks.
@@ -25,8 +25,8 @@ defmodule TesseraeServerWeb.Router do
      pipe_through :api
 
      scope "/auth" do
-       post("/register", AccountController, :create)
-       post("/login", AccountController, :login)
+       post("/register", Accounts.AccountController, :create)
+       post("/login", Accounts.AccountController, :login)
      end
   end
 

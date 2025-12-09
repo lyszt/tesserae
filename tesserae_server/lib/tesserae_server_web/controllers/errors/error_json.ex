@@ -1,4 +1,4 @@
-defmodule TesseraeServerWeb.ErrorJSON do
+defmodule TesseraeServerWeb.Errors.ErrorJSON do
   @moduledoc """
   This module is invoked by your endpoint in case of errors on JSON requests.
 

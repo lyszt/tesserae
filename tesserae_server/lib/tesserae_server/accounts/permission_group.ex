@@ -1,4 +1,4 @@
-defmodule TesseraeServer.PermissionGroup do
+defmodule TesseraeServer.Accounts.PermissionGroup do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,7 +7,7 @@ defmodule TesseraeServer.PermissionGroup do
     field :description, :string
     field :permissions, {:array, :string}, default: []
 
-    has_many :accounts, TesseraeServer.Account
+    has_many :accounts, TesseraeServer.Accounts.Account
 
     timestamps()
   end

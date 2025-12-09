@@ -1,8 +1,8 @@
 defmodule TesseraeServer.Accounts do
   import Ecto.Query, warn: false
   alias TesseraeServer.Repo
-  alias TesseraeServer.Account
-  alias TesseraeServer.PermissionGroup
+  alias TesseraeServer.Accounts.Account
+  alias TesseraeServer.Accounts.PermissionGroup
 
   def list_accounts do
     Repo.all(Account)

@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 
 alias TesseraeServer.Repo
-alias TesseraeServer.PermissionGroup
+alias TesseraeServer.Accounts.PermissionGroup
 
 # Create default permission groups
 admin_group = Repo.insert!(%PermissionGroup{

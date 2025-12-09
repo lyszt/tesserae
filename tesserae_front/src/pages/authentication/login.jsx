@@ -18,9 +18,12 @@ export default function LoginForm({setShowRegister, showRegister, setAuth,setLog
 	async function handleSubmit(e) {
 		e.preventDefault()
 		setErrorMessage('')
+        setUsername("")
+        setPassword("")
 		const res = await sendLoginData(username(), password())
 		if (!res?.success) {
 			setErrorMessage(res?.message || 'Unknown error')
+            
 			return res
 		}
 		if (res?.token) {

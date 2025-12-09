@@ -7,7 +7,7 @@ const Highlights = clientOnly(() => import("~/components/stories-highlights"));
 export default function Home() {
   return (
     <main>
-      <Title>Tesserae - Home</Title>
+      <Title>LYSZT - Home</Title>
       <Navigator />
       <div>
         <Highlights />

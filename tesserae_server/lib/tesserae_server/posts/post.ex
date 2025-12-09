@@ -1,7 +1,7 @@
-defmodule TesseraeServer.Post do
+defmodule TesseraeServer.Posts.Post do
   use Ecto.Schema
   import Ecto.Changeset
-  alias TesseraeServer.Account
+  alias TesseraeServer.Accounts.Account
 
   schema "posts" do
     belongs_to :account, Account

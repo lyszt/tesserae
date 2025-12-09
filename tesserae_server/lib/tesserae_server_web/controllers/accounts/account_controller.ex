@@ -1,4 +1,4 @@
-defmodule TesseraeServerWeb.AccountController do
+defmodule TesseraeServerWeb.Accounts.AccountController do
   use TesseraeServerWeb, :controller
   alias TesseraeServer.Accounts
 
@@ -92,7 +92,7 @@ defmodule TesseraeServerWeb.AccountController do
           {:ok, account} ->
             conn
             |> put_status(:created)
-            |> render(:show, account: account)
+            |> json(%{username: account.username, email: account.email, permissions: account.permissions})
 
           {:error, changeset} ->
             errors = Ecto.Changeset.traverse_errors(changeset, fn {msg, _opts} -> msg end)

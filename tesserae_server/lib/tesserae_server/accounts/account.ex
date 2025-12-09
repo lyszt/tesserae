@@ -1,7 +1,7 @@
-defmodule TesseraeServer.Account do
+defmodule TesseraeServer.Accounts.Account do
   use Ecto.Schema
   import Ecto.Changeset
-  alias TesseraeServer.PermissionGroup
+  alias TesseraeServer.Accounts.PermissionGroup
 
   schema "accounts" do
     field :username, :string
@@ -11,7 +11,8 @@ defmodule TesseraeServer.Account do
     field :uuid, :string
 
     belongs_to :permission_group, PermissionGroup
-    has_many :posts, TesseraeServer.Post
+    has_many :tokens, TesseraeServer.Tokens.Token
+    has_many :posts, TesseraeServer.Posts.Post
 
     timestamps()
   end

@@ -1,4 +1,4 @@
-defmodule TesseraeServerWeb.PageHTML do
+defmodule TesseraeServerWeb.Pages.PageHTML do
   @moduledoc """
   This module contains pages rendered by PageController.
 

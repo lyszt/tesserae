@@ -52,7 +52,7 @@ defmodule TesseraeServerWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug CORSPlug,
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    origin: ["http://localhost:3000", "http://127.0.0.1:3000"],
     headers: ["Authorization", "Content-Type", "Accept", "Origin"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
   plug TesseraeServerWeb.Router

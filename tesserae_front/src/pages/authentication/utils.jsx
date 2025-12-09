@@ -20,7 +20,7 @@ async function sendLoginData(username, password) {
 	} catch (err) {
 		// Trata erros do Network
 		if (err instanceof NetworkError) {
-			const serverMsg = err.response?.body || 'Erro no servidor.'
+			const serverMsg = err.response?.errors || 'Erro no servidor.'
 			// Erros 5xx: mensagem genérica de falha
 			if (err.status >= 500 && err.status < 600) {
 				return { success: false, status: err.status, message: 'Estamos tendo dificuldades. Falha na conexão.' }
