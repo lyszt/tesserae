@@ -1,6 +1,7 @@
 defmodule TesseraeServerWeb.Accounts.AccountController do
   use TesseraeServerWeb, :controller
   alias TesseraeServer.Accounts
+  alias TesseraServer.Tokens
 
   def create(conn, params) do
     # Creates an account in the server
@@ -66,13 +67,15 @@ defmodule TesseraeServerWeb.Accounts.AccountController do
       account ->
         case Argon2.verify_pass(params["password"], account.password) do
           true ->
+            {:ok, token} = Tokens.create_token_for(account)
             conn
             |> put_status(:ok)
             |> json(%{
               user: %{
                 username: account.username,
                 email: account.email,
-                permissions: account.permission_group
+                permissions: account.permission_group,
+                token: token
               }
             })
 
@@ -90,9 +93,11 @@ defmodule TesseraeServerWeb.Accounts.AccountController do
       nil ->
         case Accounts.create_account(params) do
           {:ok, account} ->
+            {:ok, token} = Tokens.create_token_for(account)
+
             conn
             |> put_status(:created)
-            |> json(%{username: account.username, email: account.email, permissions: account.permissions})
+            |> json(%{username: account.username, email: account.email, permissions: account.permissions, token: token})
 
           {:error, changeset} ->
             errors = Ecto.Changeset.traverse_errors(changeset, fn {msg, _opts} -> msg end)
