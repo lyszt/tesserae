@@ -23,7 +23,7 @@ export default function Navigator({setLoginScreen}) {
  
 
   return (
-    <NavigationMenu className="fixed left-[6%] bg-white transition-all duration-600 hover:top-[.5%] top-0">
+    <NavigationMenu className="fixed left-[6%] bg-white p-4 transition-all duration-600 hover:top-[.5%] top-0">
       <span className="ml-[2%]">LYSZT</span>
       <NavigationMenuList>
       

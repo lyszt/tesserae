@@ -1,6 +1,17 @@
 // Utilitários para gerenciamento de API e token de autenticação
 
-const API_BASE_URL = 'http://127.0.0.1:5000'
+import Network from '../lib/network/Network'
+
+const API_BASE_URL = 'http://127.0.0.1:5000/api/'
+
+// Cria instância do Network com configuração base
+const network = new Network({
+    baseURL: API_BASE_URL,
+    timeout: 30000,
+})
+
+// Exporta instância do Network para uso externo
+export { network }
 
 // Recupera token JWT do localStorage
 export function getToken() {
@@ -24,36 +35,23 @@ export function isAuthenticated() {
     return !!getToken()
 }
 
-// Faz requisição HTTP autenticada adicionando token no header Authorization
-export async function authenticatedFetch(endpoint, options = {}) {
+// Retorna instância do Network configurada com autenticação
+export function getAuthenticatedNetwork() {
     const token = getToken()
-    
-    // Monta headers com Content-Type padrão e mescla com headers customizados
-    const headers = {
-        'Content-Type': 'application/json',
-        ...(options.headers || {})
-    }
+
+    // Cria nova instância do Network com token de autenticação
+    const authNetwork = new Network({
+        baseURL: API_BASE_URL,
+        timeout: 30000,
+    })
 
     // Adiciona Token Knox se usuário estiver autenticado
     // Knox espera o formato "Token <token>" ao invés de "Bearer <token>"
     if (token) {
-        headers['Authorization'] = `Token ${token}`
+        authNetwork.setHeader('Authorization', `Token ${token}`)
     }
 
-    // Constrói URL completa (suporta paths relativos e URLs absolutas)
-    const url = endpoint.startsWith('http') ? endpoint : `${API_BASE_URL}${endpoint}`
-
-    try {
-        const response = await fetch(url, {
-            ...options,
-            headers
-        })
-
-        return response
-    } catch (error) {
-        console.error('Erro na requisição autenticada:', error)
-        throw error
-    }
+    return authNetwork
 }
 
 // Retorna URL base da API (centralizando configuração)
