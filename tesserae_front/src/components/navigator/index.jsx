@@ -15,26 +15,43 @@ import { CodeOutlinedIcon } from "@/components/ui/icons/ant-design-code-outlined
 import { CoffeeOutlinedIcon } from "@/components/ui/icons/ant-design-coffee-outlined";
 import { FunctionOutlinedIcon } from "@/components/ui/icons/ant-design-function-outlined";
 import { LoginOutlinedIcon } from "@/components/ui/icons/ant-design-login-outlined";
-
+import { isAuthenticated, removeToken, validateToken } from "@/utils/api";
+import { onMount, onCleanup } from "solid-js";
 
 // Music player was removed for multiple reasons,
 // Including avoiding copyright and that it was sort of useless
 
-export default function Navigator({auth, setAuth}) {
- 
+export default function Navigator(props) {
   const logout = () => {
-    setAuth(false);
-    localStorage.removeItem('access_token');
-  }
+    removeToken();
+    window.location.href = "/";
+  };
+
+  let intervalId = null;
+  onMount(() => {
+    const checkAuth = async () => {
+      if (isAuthenticated()) {
+        if (!(await validateToken())) {
+          removeToken();
+          window.location.href = "/auth";
+        }
+      }
+      checkAuth();
+      intervalId = window.setInterval(checkAuth, 6e5);
+      onCleanup(() => clearInterval(intervalId));
+    };
+  });
+
+  onCleanup(() => {
+    if (intervalId) clearInterval(intervalId);
+  });
+
   return (
     <NavigationMenu className="fixed left-[6%] bg-white p-4 transition-all duration-600 hover:top-[.5%] top-0">
       <span className="ml-[2%]">LYSZT</span>
       <NavigationMenuList>
-      
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="gap-3">
-            Home
-          </NavigationMenuTrigger>
+          <NavigationMenuTrigger className="gap-3">Home</NavigationMenuTrigger>
           <NavigationMenuContent>
             <NavigationMenuLink>Link</NavigationMenuLink>
           </NavigationMenuContent>
@@ -42,7 +59,7 @@ export default function Navigator({auth, setAuth}) {
 
         <NavigationMenuItem>
           <NavigationMenuTrigger className="gap-3">
-            <InfoOutlinedIcon color="#5a5f73"/>
+            <InfoOutlinedIcon color="#5a5f73" />
             About
           </NavigationMenuTrigger>
           {/* Resume should now come here, not inside its own category, or linked down below*/}
@@ -51,21 +68,21 @@ export default function Navigator({auth, setAuth}) {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-         <NavigationMenuItem>
+        <NavigationMenuItem>
           <NavigationMenuTrigger className="gap-3">
-            <CodeOutlinedIcon color="#5a5f73"/>
+            <CodeOutlinedIcon color="#5a5f73" />
             Labs
-            </NavigationMenuTrigger>
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <NavigationMenuLink>Link</NavigationMenuLink>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-         <NavigationMenuItem>
+        <NavigationMenuItem>
           <NavigationMenuTrigger className="gap-3">
-            <CoffeeOutlinedIcon color="#5a5f73"/>
+            <CoffeeOutlinedIcon color="#5a5f73" />
             Stories
-            </NavigationMenuTrigger>
+          </NavigationMenuTrigger>
           {/* This will be based on the verge*/}
           <NavigationMenuContent>
             <NavigationMenuLink>Link</NavigationMenuLink>
@@ -74,7 +91,7 @@ export default function Navigator({auth, setAuth}) {
 
         <NavigationMenuItem>
           <NavigationMenuTrigger className="gap-3">
-            <FunctionOutlinedIcon color="#5a5f73"/>
+            <FunctionOutlinedIcon color="#5a5f73" />
             Toolkit
           </NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -82,14 +99,15 @@ export default function Navigator({auth, setAuth}) {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <A href={auth ? "#" : "/auth"}>
-          <Button onClick={auth? logout : undefined } className="bg-slate-900 text-white hover:bg-slate-800 ml-2">
+        <A href={isAuthenticated() ? "#" : "/auth"}>
+          <Button
+            onClick={isAuthenticated() ? logout : undefined}
+            className="bg-slate-900 text-white hover:bg-slate-800 ml-2"
+          >
             <LoginOutlinedIcon color="#ffffff" />
-            {auth ? "Logout" : "Login"}
+            {isAuthenticated() ? "Logout" : "Login"}
           </Button>
         </A>
-
-
       </NavigationMenuList>
     </NavigationMenu>
   );

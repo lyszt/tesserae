@@ -1,6 +1,6 @@
 // Utilitários para gerenciamento de API e token de autenticação
 
-import Network from '../lib/network/Network'
+import Network, { NetworkError } from '../lib/network/Network'
 
 const API_BASE_URL = 'http://127.0.0.1:4000/api/'
 
@@ -40,7 +40,7 @@ export function isAuthenticated() {
 
 // Retorna instância do Network configurada com autenticação
 export function getAuthenticatedNetwork() {
-    const token = getToken()
+    const token = getToken();
 
     // Cria nova instância do Network com token de autenticação
     const authNetwork = new Network({
@@ -48,13 +48,32 @@ export function getAuthenticatedNetwork() {
         timeout: 30000,
     })
 
-    // Adiciona Token Knox se usuário estiver autenticado
-    // Knox espera o formato "Token <token>" ao invés de "Bearer <token>"
+    // Adiciona Token se usuário estiver autenticado
     if (token) {
-        authNetwork.setHeader('Authorization', `Token ${token}`)
+        authNetwork.setHeader('Authorization', `Bearer ${token}`);
     }
 
     return authNetwork
+}
+
+// Valida token
+export async function validateToken() {
+    const token = getToken();
+
+    if(token) {
+        try {
+            const authNetwork = getAuthenticatedNetwork();
+            const response = await authNetwork.post("/auth/validate", {})
+            return response?.status === 200
+        } catch (error) {
+            if (error instanceof NetworkError && error.status === 401) {
+                return false
+            }
+            console.log(error);
+            return false
+        }
+    }
+    return false
 }
 
 // Retorna URL base da API (centralizando configuração)
