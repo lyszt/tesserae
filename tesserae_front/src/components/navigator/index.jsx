@@ -136,12 +136,12 @@ export default function Navigator(props) {
             <NavigationMenuContent>
               <ul class="w-[30vw] gap-2 p-2 flex flex-row">
                 <div>
-                  <ListItem className="w-full" href="/news" title="Profile">
+                  <ListItem className="w-full" href="/profile" title="Profile">
                     View your profile
                   </ListItem>
                 </div>
                 <div>
-                  <ListItem className="w-full" href="/feed" title="Friends">
+                  <ListItem className="w-full" href="/friends" title="Friends">
                     Open your friends list
                   </ListItem>
                 </div>

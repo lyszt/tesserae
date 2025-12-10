@@ -83,7 +83,13 @@ function NavigationMenuTrigger({ className, children, showChevron = true, ...pro
     <button
       data-slot="navigation-menu-trigger"
       className={cn(navigationMenuTriggerStyle(), "group", className)}
-      onClick={() => ctx?.setOpen && ctx.setOpen(!ctx.open())}
+      onClick={(e) => {
+        e.preventDefault();
+        // Don't toggle if already open (from hover)
+        if (!ctx?.open()) {
+          ctx?.setOpen && ctx.setOpen(true);
+        }
+      }}
       {...props}
     >
       {children}
