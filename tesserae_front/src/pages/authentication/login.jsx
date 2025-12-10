@@ -22,10 +22,9 @@ export default function LoginForm({setShowRegister, showRegister, setAuth,setLog
         console.log(res);
 		if (!res?.success) {
 			setErrorMessage(res?.message || 'Unknown error')
-            
 			return res
 		}
-		if (res?.token) {
+		if (res?.success) {
 			setAuth(true);
             setLoginScreen(false);
 		}

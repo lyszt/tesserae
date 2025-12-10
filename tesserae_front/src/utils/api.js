@@ -13,29 +13,48 @@ const network = new Network({
 // Exporta instância do Network para uso externo
 export { network }
 
-// Recupera token JWT do localStorage (SSR-safe)
-export function getToken() {
-    if (typeof window === 'undefined') return null
-    return localStorage.getItem('access_token')
-}
-
-// Armazena token JWT no localStorage (mantém sessão ativa)
-export function setToken(token) {
+// Armazena dados de autenticação completos (token, user, etc.)
+export function setAuthData({ token, user, ...otherData }) {
     if (typeof window === 'undefined') return
-    if (token) {
-        localStorage.setItem('access_token', token)
+
+    const authData = {
+        token: token || null,
+        user: user || null,
+        ...otherData
     }
+
+    localStorage.setItem('auth_data', JSON.stringify(authData))
 }
 
-// Remove token do localStorage (efetua logout)
-export function removeToken() {
+// Recupera dados de autenticação completos
+export function getAuthData() {
+    if (typeof window === 'undefined') return null
+
+    const data = localStorage.getItem('auth_data')
+    return data ? JSON.parse(data) : null
+}
+
+// Remove todos os dados de autenticação (efetua logout)
+export function clearAuthData() {
     if (typeof window === 'undefined') return
-    localStorage.removeItem('access_token')
+    localStorage.removeItem('auth_data')
 }
 
-// Verifica se usuário está autenticado (usa !! para converter em boolean)
+// Recupera apenas o token (para compatibilidade)
+export function getToken() {
+    const authData = getAuthData()
+    return authData?.token || null
+}
+
+// Verifica se usuário está autenticado
 export function isAuthenticated() {
     return !!getToken()
+}
+
+// Recupera informações do usuário
+export function getUser() {
+    const authData = getAuthData()
+    return authData?.user || null
 }
 
 // Retorna instância do Network configurada com autenticação

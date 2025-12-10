@@ -1,4 +1,4 @@
-import { network, setToken } from '../../../utils/api'
+import { network, setAuthData } from '../../../utils/api'
 import { NetworkError } from '../../../lib/network/Network'
 
 // Registra novo usuário e faz login automático
@@ -10,12 +10,14 @@ async function sendRegisterData(username, password, email) {
 
         const data = response.body
 
-        // Armazena token (login automático após registro)
-        const token = data?.token || null
-        if (token?.hash) {
-            setToken(token.hash)
+        // Armazena token e dados do usuário (login automático após registro)
+        if (data?.token?.hash) {
+            setAuthData({
+                token: data.token.hash,
+                user: data.user
+            })
         }
-        return { success: true, token }
+        return { success: true }
     } catch (err) {
         // Trata erros do Network
         if (err instanceof NetworkError) {

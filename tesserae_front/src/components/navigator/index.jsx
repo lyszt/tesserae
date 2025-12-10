@@ -15,7 +15,7 @@ import { CodeOutlinedIcon } from "@/components/ui/icons/ant-design-code-outlined
 import { CoffeeOutlinedIcon } from "@/components/ui/icons/ant-design-coffee-outlined";
 import { FunctionOutlinedIcon } from "@/components/ui/icons/ant-design-function-outlined";
 import { LoginOutlinedIcon } from "@/components/ui/icons/ant-design-login-outlined";
-import { isAuthenticated, removeToken, validateToken } from "@/utils/api";
+import { isAuthenticated, clearAuthData, validateToken, getUser } from "@/utils/api";
 import { onMount, onCleanup } from "solid-js";
 
 // Music player was removed for multiple reasons,
@@ -38,8 +38,12 @@ function ListItem(props) {
 }
 
 export default function Navigator(props) {
+
+  // Get username if logged in
+  const username = () => getUser()?.username;
+
   const logout = () => {
-    removeToken();
+    clearAuthData();
     window.location.href = "/";
   };
 
@@ -48,7 +52,7 @@ export default function Navigator(props) {
     const checkAuth = async () => {
       if (isAuthenticated()) {
         if (!(await validateToken())) {
-          removeToken();
+          clearAuthData();
           window.location.href = "/auth";
         }
       }
@@ -136,7 +140,7 @@ export default function Navigator(props) {
             <NavigationMenuContent>
               <ul class="w-[30vw] gap-2 p-2 flex flex-row">
                 <div>
-                  <ListItem className="w-full" href="/profile" title="Profile">
+                  <ListItem className="w-full" href={"/profile/" + username()} title="Profile">
                     View your profile
                   </ListItem>
                 </div>

@@ -1,4 +1,4 @@
-import { network, setToken } from '../../utils/api'
+import { network, setAuthData } from '../../utils/api'
 import { NetworkError } from '../../lib/network/Network'
 
 // Envia credenciais para a API e gerencia autenticação
@@ -11,12 +11,14 @@ async function sendLoginData(username, password) {
 
 		const data = response.body
 
-		// Armazena token no localStorage para manter sessão
-		const token = data?.token || null
-		if (token?.hash) {
-			setToken(token.hash)
+		// Armazena token e dados do usuário no localStorage
+		if (data?.token?.hash) {
+			setAuthData({
+				token: data.token.hash,
+				user: data.user
+			})
 		}
-		return { success: true, token, username: data?.user?.username }
+		return { success: true }
 	} catch (err) {
 		// Trata erros do Network
 		if (err instanceof NetworkError) {

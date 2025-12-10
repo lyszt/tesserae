@@ -24,7 +24,7 @@ export default function RegisterScreen({showRegister, setShowRegister, setAuth, 
 			setErrorMessage(res?.message)
 			return res
 		}
-		if (res?.token) {
+		if (res?.success) {
 			setAuth(true);
             setLoginScreen(false);
 		}
