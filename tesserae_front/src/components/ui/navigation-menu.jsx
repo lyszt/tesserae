@@ -1,4 +1,4 @@
-import { createSignal, createContext, useContext } from "solid-js"
+import { createSignal, createContext, useContext, Show, onMount, onCleanup } from "solid-js"
 import { cva } from "class-variance-authority"
 import {AppstoreOutlinedIcon } from "@/components/ui/icons/ant-design-appstore-outlined";
 import { cn } from "@/lib/utils"
@@ -22,10 +22,45 @@ function NavigationMenuList({ className, ...props }) {
 
 function NavigationMenuItem(props, section = "") {
   const [open, setOpen] = createSignal(false)
+  let menuRef;
+  let closeTimeout;
+
+  onMount(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef && !menuRef.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    onCleanup(() => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      if (closeTimeout) clearTimeout(closeTimeout);
+    });
+  });
+
+  const handleMouseEnter = () => {
+    if (closeTimeout) clearTimeout(closeTimeout);
+    setOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimeout = setTimeout(() => {
+      setOpen(false);
+    }, 200);
+  };
 
   return (
     <ItemContext.Provider value={{ open, setOpen }}>
-      <li data-slot="navigation-menu-item" className={cn("relative", props.className)} {...props} />
+      <li
+        ref={menuRef}
+        data-slot="navigation-menu-item"
+        className={cn("relative", props.className)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {props.children}
+      </li>
     </ItemContext.Provider>
   )
 }
@@ -63,11 +98,19 @@ function NavigationMenuTrigger({ className, children, showChevron = true, ...pro
 
 function NavigationMenuContent({ className, children, ...props }) {
   const ctx = useContext(ItemContext)
-  return ctx && ctx.open() ? (
-    <div data-slot="navigation-menu-content" className={cn("absolute top-full left-0 w-auto p-2 mt-1.5 rounded-md shadow", className)} {...props}>
+  return (
+    <div
+      data-slot="navigation-menu-content"
+      className={cn("absolute top-full left-0 w-auto p-2 mt-1.5 rounded-md shadow-lg bg-white border border-gray-200 z-50 transition-opacity duration-200", className)}
+      style={{
+        opacity: ctx?.open() ? 1 : 0,
+        "pointer-events": ctx?.open() ? "auto" : "none"
+      }}
+      {...props}
+    >
       {children}
     </div>
-  ) : null
+  )
 }
 
 function NavigationMenuViewport({ className, ...props }) {

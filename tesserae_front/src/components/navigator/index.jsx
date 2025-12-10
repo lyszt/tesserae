@@ -21,6 +21,22 @@ import { onMount, onCleanup } from "solid-js";
 // Music player was removed for multiple reasons,
 // Including avoiding copyright and that it was sort of useless
 
+function ListItem(props) {
+  return (
+    <li>
+      <A
+        href={props.href}
+        class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+      >
+        <div class="text-sm font-medium leading-none">{props.title}</div>
+        <p class="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          {props.children}
+        </p>
+      </A>
+    </li>
+  );
+}
+
 export default function Navigator(props) {
   const logout = () => {
     removeToken();
@@ -47,7 +63,7 @@ export default function Navigator(props) {
   });
 
   return (
-    <NavigationMenu className="fixed left-[6%] bg-white p-4 transition-all duration-600 hover:top-[.5%] top-0">
+    <NavigationMenu className="fixed left-[6%] bg-white p-4">
       <span className="ml-[2%]">LYSZT</span>
       <NavigationMenuList>
         <NavigationMenuItem>
@@ -85,7 +101,18 @@ export default function Navigator(props) {
           </NavigationMenuTrigger>
           {/* This will be based on the verge*/}
           <NavigationMenuContent>
-            <NavigationMenuLink>Link</NavigationMenuLink>
+            <ul class="w-[30vw] gap-2 p-2 flex flex-row">
+              <div>
+                <ListItem className="w-full" href="/news" title="News">
+                  Browse the latest tech stories
+                </ListItem>
+              </div>
+              <div>
+                <ListItem className="w-full" href="/feed" title="Feed">
+                  Read the community feed
+                </ListItem>
+              </div>
+            </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
@@ -98,6 +125,30 @@ export default function Navigator(props) {
             <NavigationMenuLink>Link</NavigationMenuLink>
           </NavigationMenuContent>
         </NavigationMenuItem>
+
+        {isAuthenticated() && (
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className="gap-3">
+              <CoffeeOutlinedIcon color="#5a5f73" />
+              Profile
+            </NavigationMenuTrigger>
+            {/* This will be based on the verge*/}
+            <NavigationMenuContent>
+              <ul class="w-[30vw] gap-2 p-2 flex flex-row">
+                <div>
+                  <ListItem className="w-full" href="/news" title="Profile">
+                    View your profile
+                  </ListItem>
+                </div>
+                <div>
+                  <ListItem className="w-full" href="/feed" title="Friends">
+                    Open your friends list
+                  </ListItem>
+                </div>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        )}
 
         <A href={isAuthenticated() ? "#" : "/auth"}>
           <Button
