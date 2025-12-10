@@ -12,8 +12,8 @@ async function sendRegisterData(username, password, email) {
 
         // Armazena token (login automático após registro)
         const token = data?.token || null
-        if (token) {
-            setToken(token)
+        if (token?.hash) {
+            setToken(token.hash)
         }
         return { success: true, token }
     } catch (err) {

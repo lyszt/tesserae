@@ -13,10 +13,10 @@ async function sendLoginData(username, password) {
 
 		// Armazena token no localStorage para manter sessão
 		const token = data?.token || null
-		if (token) {
-			setToken(token)
+		if (token?.hash) {
+			setToken(token.hash)
 		}
-		return { success: true, token, username: data?.username }
+		return { success: true, token, username: data?.user?.username }
 	} catch (err) {
 		// Trata erros do Network
 		if (err instanceof NetworkError) {
