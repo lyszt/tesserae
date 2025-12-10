@@ -27,6 +27,7 @@ export default function LoginForm({setShowRegister, showRegister, setAuth,setLog
 		}
 		if (res?.token) {
 			setAuth(true);
+            setLoginScreen(false);
 		}
 		return res
 	}

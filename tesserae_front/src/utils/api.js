@@ -16,21 +16,21 @@ export { network }
 // Recupera token JWT do localStorage (SSR-safe)
 export function getToken() {
     if (typeof window === 'undefined') return null
-    return localStorage.getItem('token_acesso')
+    return localStorage.getItem('access_token')
 }
 
 // Armazena token JWT no localStorage (mantém sessão ativa)
 export function setToken(token) {
     if (typeof window === 'undefined') return
     if (token) {
-        localStorage.setItem('token_acesso', token)
+        localStorage.setItem('access_token', token)
     }
 }
 
 // Remove token do localStorage (efetua logout)
 export function removeToken() {
     if (typeof window === 'undefined') return
-    localStorage.removeItem('token_acesso')
+    localStorage.removeItem('access_token')
 }
 
 // Verifica se usuário está autenticado (usa !! para converter em boolean)

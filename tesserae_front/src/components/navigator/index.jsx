@@ -20,9 +20,12 @@ import { LoginOutlinedIcon } from "@/components/ui/icons/ant-design-login-outlin
 // Music player was removed for multiple reasons,
 // Including avoiding copyright and that it was sort of useless
 
-export default function Navigator() {
+export default function Navigator({auth, setAuth}) {
  
-
+  const logout = () => {
+    setAuth(false);
+    localStorage.removeItem('access_token');
+  }
   return (
     <NavigationMenu className="fixed left-[6%] bg-white p-4 transition-all duration-600 hover:top-[.5%] top-0">
       <span className="ml-[2%]">LYSZT</span>
@@ -79,10 +82,10 @@ export default function Navigator() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <A href="/auth">
-          <Button className="bg-slate-900 text-white hover:bg-slate-800 ml-2">
+        <A href={auth ? "#" : "/auth"}>
+          <Button onClick={auth? logout : undefined } className="bg-slate-900 text-white hover:bg-slate-800 ml-2">
             <LoginOutlinedIcon color="#ffffff" />
-            Login
+            {auth ? "Logout" : "Login"}
           </Button>
         </A>
 

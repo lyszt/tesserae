@@ -12,9 +12,9 @@ function App() {
 
   return (
     <main>
-      {!loginScreen() && <Navigator setLoginScreen={setLoginScreen}/>}
+      {!loginScreen() && <Navigator setLoginScreen={setLoginScreen} auth={auth()} setAuth={setAuth}/>}
       {!loginScreen() && home() && <Home/>}
-      {loginScreen() && !auth && <AuthenticationPage setLoginScreen={setLoginScreen} setAuth={setAuth}/>}
+      {loginScreen() && !auth() && <AuthenticationPage setLoginScreen={setLoginScreen} setAuth={setAuth}/>}
 
       { /* Footer */}
     </main>
