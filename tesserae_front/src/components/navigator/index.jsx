@@ -103,7 +103,9 @@ export default function Navigator(props) {
             <CoffeeOutlinedIcon color="#5a5f73" />
             Stories
           </NavigationMenuTrigger>
+          
           {/* This will be based on the verge*/}
+
           <NavigationMenuContent>
             <ul class="w-[30vw] gap-2 p-2 flex flex-row">
               <div>
@@ -130,39 +132,41 @@ export default function Navigator(props) {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        {isAuthenticated() && (
-          <NavigationMenuItem>
-            <NavigationMenuTrigger className="gap-3">
-              <CoffeeOutlinedIcon color="#5a5f73" />
-              Profile
-            </NavigationMenuTrigger>
-            {/* This will be based on the verge*/}
-            <NavigationMenuContent>
-              <ul class="w-[30vw] gap-2 p-2 flex flex-row">
-                <div>
-                  <ListItem className="w-full" href={"/profile/" + username()} title="Profile">
-                    View your profile
-                  </ListItem>
-                </div>
-                <div>
-                  <ListItem className="w-full" href="/friends" title="Friends">
-                    Open your friends list
-                  </ListItem>
-                </div>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        )}
+        <div className="flex flex-row-reverse">
+          {isAuthenticated() && (
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className="gap-3">
+                <CoffeeOutlinedIcon color="#5a5f73" />
+                Profile
+              </NavigationMenuTrigger>
+              {/* This will be based on the verge*/}
+              <NavigationMenuContent>
+                <ul class="w-[30vw] gap-2 p-2 flex flex-row">
+                  <div>
+                    <ListItem className="w-full" href={"/profile/" + username()} title="Profile">
+                      View your profile
+                    </ListItem>
+                  </div>
+                  <div>
+                    <ListItem className="w-full" href="/friends" title="Friends">
+                      Open your friends list
+                    </ListItem>
+                  </div>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          )}
 
-        <A href={isAuthenticated() ? "#" : "/auth"}>
-          <Button
-            onClick={isAuthenticated() ? logout : undefined}
-            className="bg-slate-900 text-white hover:bg-slate-800 ml-2"
-          >
-            <LoginOutlinedIcon color="#ffffff" />
-            {isAuthenticated() ? "Logout" : "Login"}
-          </Button>
-        </A>
+          <A href={isAuthenticated() ? "#" : "/auth"}>
+            <Button
+              onClick={isAuthenticated() ? logout : undefined}
+              className="bg-slate-900 text-white hover:bg-slate-800 ml-2"
+            >
+              <LoginOutlinedIcon color="#ffffff" />
+              {isAuthenticated() ? "Logout" : "Login"}
+            </Button>
+          </A>
+        </div>
       </NavigationMenuList>
     </NavigationMenu>
   );

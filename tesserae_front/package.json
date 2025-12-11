@@ -17,6 +17,7 @@
     "@solidjs/router": "^0.15.4",
     "@solidjs/start": "^1.2.0",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.555.0",
     "react-hook-form": "^7.68.0",
