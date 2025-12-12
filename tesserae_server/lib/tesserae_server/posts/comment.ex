@@ -6,6 +6,7 @@ defmodule TesseraeServer.Posts.Comment do
 
   schema "comments" do
     field :content, :string
+    field :report_count, :integer, default: 0
 
     belongs_to :account, Account
     belongs_to :post, Post

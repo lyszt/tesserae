@@ -28,10 +28,14 @@ defmodule TesseraeServer.Posts.Post do
     field :reading_time_minutes, :integer
     field :is_published, :boolean, default: false
     field :published_at, :utc_datetime
+    field :status, Ecto.Enum, values: [:draft, :published, :hidden, :archived, :flagged], default: :draft
 
     # SEO
     field :slug, :string
     field :meta_description, :string
+
+    # Moderation
+    field :report_count, :integer, default: 0
 
     has_many :comments, Comment
     has_many :likes, Like
@@ -60,6 +64,7 @@ defmodule TesseraeServer.Posts.Post do
       :reading_time_minutes,
       :is_published,
       :published_at,
+      :status,
       :slug,
       :meta_description,
       :account_id,
@@ -70,6 +75,7 @@ defmodule TesseraeServer.Posts.Post do
     |> validate_url(:external_url)
     |> validate_url(:canonical_url)
     |> validate_slug()
+    |> validate_inclusion(:status, [:draft, :published, :hidden, :archived, :flagged])
     |> unique_constraint(:slug)
     |> foreign_key_constraint(:account_id)
     |> foreign_key_constraint(:company_id)
