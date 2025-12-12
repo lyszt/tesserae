@@ -1,7 +1,7 @@
 defmodule TesseraeServer.Accounts.Account do
   use Ecto.Schema
   import Ecto.Changeset
-  alias TesseraeServer.Accounts.PermissionGroup
+  alias TesseraeServer.Accounts.{PermissionGroup, Profile}
 
   schema "accounts" do
     field :username, :string
@@ -11,6 +11,7 @@ defmodule TesseraeServer.Accounts.Account do
     field :uuid, :string
 
     belongs_to :permission_group, PermissionGroup
+    has_one :profile, Profile
     has_many :tokens, TesseraeServer.Tokens.Token
     has_many :posts, TesseraeServer.Posts.Post
 
@@ -27,7 +28,7 @@ defmodule TesseraeServer.Accounts.Account do
         :provider,
         :uuid,
         :permission_group_id
-        ])
+      ])
       |> validate_required([
           :username
         ])
