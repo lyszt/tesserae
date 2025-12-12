@@ -47,34 +47,12 @@ export default function Navigator(props) {
     window.location.href = "/";
   };
 
-  let intervalId = null;
-  onMount(() => {
-    const checkAuth = async () => {
-      if (isAuthenticated()) {
-        if (!(await validateToken())) {
-          clearAuthData();
-          window.location.href = "/auth";
-        }
-      }
-      checkAuth();
-      intervalId = window.setInterval(checkAuth, 6e5);
-      onCleanup(() => clearInterval(intervalId));
-    };
-  });
-
-  onCleanup(() => {
-    if (intervalId) clearInterval(intervalId);
-  });
-
   return (
     <NavigationMenu className="fixed left-[6%] bg-white p-4">
       <span className="ml-[2%]">LYSZT</span>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="gap-3">Home</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <NavigationMenuLink>Link</NavigationMenuLink>
-          </NavigationMenuContent>
+          <NavigationMenuTrigger showChevron={false} onClick={() => {window.location.href = "/"}}className="gap-3">Home</NavigationMenuTrigger>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
