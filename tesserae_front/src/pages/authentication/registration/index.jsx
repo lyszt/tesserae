@@ -14,6 +14,7 @@ export default function RegisterScreen({showRegister, setShowRegister, setAuth, 
 	const [username, setUsername] = createSignal('')
 	const [password, setPassword] = createSignal('')
 	const [email, setEmail] = createSignal('')
+	const [fullname, setFullname] = createSignal('')
 	const [errorMessage, setErrorMessage] = createSignal('')
 
 	async function handleSubmit(e) {
@@ -83,6 +84,18 @@ export default function RegisterScreen({showRegister, setShowRegister, setAuth, 
 							</div>
 
 							<div className="space-y-2">
+								<Label htmlFor="fullname">Full name</Label>
+								<Input
+									id="fullname"
+									type="fullname"
+									placeholder="Enter your full name"
+									value={fullname()}
+									onInput={(e) => { setFullname(e.target.value); setErrorMessage('') }}
+									className="h-10"
+								/>
+							</div>
+
+							<div className="space-y-2">
 								<Label htmlFor="email">Email</Label>
 								<Input
 									id="email"
@@ -93,6 +106,7 @@ export default function RegisterScreen({showRegister, setShowRegister, setAuth, 
 									className="h-10"
 								/>
 							</div>
+							
 
 							<div className="space-y-2">
 								<Label htmlFor="password">Password</Label>

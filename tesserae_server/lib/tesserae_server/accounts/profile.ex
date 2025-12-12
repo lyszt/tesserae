@@ -4,6 +4,9 @@ defmodule TesseraeServer.Accounts.Profile do
   alias TesseraeServer.Accounts.Account
   alias TesseraeServer.Profiles.{AcademicArticle, JobExperience, Award, Skill, Project}
 
+  @derive {Jason.Encoder, except: [ :account ]}
+
+
   schema "profiles" do
     # Basic Info
     field :fullname, :string

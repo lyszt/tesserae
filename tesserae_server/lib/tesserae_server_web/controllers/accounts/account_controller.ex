@@ -32,7 +32,8 @@ defmodule TesseraeServerWeb.Accounts.AccountController do
         user_params = %{
           username: params["username"],
           email: params["email"],
-          password: password
+          password: password,
+          fullname: params["fullname"]
         }
 
         create_with_params(conn, user_params)
@@ -73,6 +74,7 @@ defmodule TesseraeServerWeb.Accounts.AccountController do
             |> json(%{
               token: token,
               user: %{
+                id: account.id,
                 username: account.username,
                 email: account.email,
                 permissions: account.permission_group
@@ -100,6 +102,7 @@ defmodule TesseraeServerWeb.Accounts.AccountController do
             |> json(%{
               token: token,
               user: %{
+                id: account.id,
                 username: account.username,
                 email: account.email,
                 permissions: account.permission_group
