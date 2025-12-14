@@ -24,10 +24,13 @@ defmodule TesseraeServerWeb.Router do
   scope "/api", TesseraeServerWeb do
      pipe_through :api
 
+     get("/profile", Profile.ProfileController, :get_profile_by_id)
+
      scope "/auth" do
        post("/register", Accounts.AccountController, :create)
        post("/login", Accounts.AccountController, :login)
        post("/validate", Tokens.TokenController, :validate)
+
      end
   end
 

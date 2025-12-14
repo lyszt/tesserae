@@ -3,6 +3,7 @@ defmodule TesseraeServer.Accounts do
   alias TesseraeServer.Repo
   alias TesseraeServer.Accounts.Account
   alias TesseraeServer.Accounts.PermissionGroup
+  alias TesseraeServer.Profiles
 
   def list_accounts do
     Repo.all(Account)
@@ -25,9 +26,25 @@ defmodule TesseraeServer.Accounts do
   end
 
   def create_account(attrs \\ %{}) do
-    %Account{}
-    |> Account.changeset(attrs)
-    |> Repo.insert()
+    Repo.transaction(fn ->
+      case %Account{} |> Account.changeset(attrs) |> Repo.insert() do
+        {:ok, account} ->
+          # create an empty profile linked to the new account. rollback on failure
+          case Profiles.create_profile(%{account_id: account.id, fullname: account.username || ""}) do
+            {:ok, _profile} ->
+              account
+            {:error, reason} ->
+              Repo.rollback(reason)
+          end
+
+        {:error, changeset} ->
+          Repo.rollback(changeset)
+      end
+    end)
+    |> case do
+      {:ok, acc} -> {:ok, acc}
+      {:error, reason} -> {:error, reason}
+    end
   end
 
   def update_account(%Account{} = account, attrs) do

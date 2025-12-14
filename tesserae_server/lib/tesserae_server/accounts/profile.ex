@@ -4,7 +4,7 @@ defmodule TesseraeServer.Accounts.Profile do
   alias TesseraeServer.Accounts.Account
   alias TesseraeServer.Profiles.{AcademicArticle, JobExperience, Award, Skill, Project}
 
-  @derive {Jason.Encoder, except: [ :account ]}
+  @derive {Jason.Encoder, except: [:account, :__meta__]}
 
 
   schema "profiles" do
