@@ -29,8 +29,8 @@ defmodule TesseraeServer.Accounts do
     Repo.transaction(fn ->
       case %Account{} |> Account.changeset(attrs) |> Repo.insert() do
         {:ok, account} ->
-          # create an empty profile linked to the new account. rollback on failure
-          case Profiles.create_profile(%{account_id: account.id, fullname: account.fullname || account.username}) do
+          fullname = Map.get(attrs, :fullname) || Map.get(attrs, "fullname") || ""
+          case Profiles.create_profile(%{account_id: account.id, fullname: fullname}) do
             {:ok, _profile} ->
               account
             {:error, reason} ->
