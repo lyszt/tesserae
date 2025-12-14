@@ -52,7 +52,9 @@ export default function Profile() {
       items-start p-10 bg-gray-100 gap-5">
           <div className="bg-gray-200 rounded-full h-[3vw] w-[3vw] "> </div>
           {fullName()}
-          <Button className="pl-[2%] pr-[2%]">Edit profile</Button>
+          <div className="flex w-full flex-col">
+          <Button className="pl-[2%] pr-[2%] w-[8%]">Edit profile</Button>
+          </div>
         </div>
 
         : <span>Failed to load profile. </span>
