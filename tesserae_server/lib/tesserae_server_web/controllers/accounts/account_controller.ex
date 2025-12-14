@@ -97,6 +97,9 @@ defmodule TesseraeServerWeb.Accounts.AccountController do
           {:ok, account} ->
             {:ok, token} = Tokens.create_token_for(account, "access", hours: 24)
 
+            # reload the account so associations (permission_group) are preloaded
+            account = Accounts.get_account!(account.id)
+
             conn
             |> put_status(:created)
             |> json(%{

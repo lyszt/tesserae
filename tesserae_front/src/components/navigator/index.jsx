@@ -1,4 +1,4 @@
-import { A } from "@solidjs/router";
+import { A, useLocation } from "@solidjs/router";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -16,7 +16,7 @@ import { CoffeeOutlinedIcon } from "@/components/ui/icons/ant-design-coffee-outl
 import { FunctionOutlinedIcon } from "@/components/ui/icons/ant-design-function-outlined";
 import { LoginOutlinedIcon } from "@/components/ui/icons/ant-design-login-outlined";
 import { isAuthenticated, clearAuthData, validateToken, getUser } from "@/utils/api";
-import { onMount, onCleanup } from "solid-js";
+import { onMount, onCleanup, createSignal, createEffect } from "solid-js";
 
 // Music player was removed for multiple reasons,
 // Including avoiding copyright and that it was sort of useless
@@ -38,12 +38,21 @@ function ListItem(props) {
 }
 
 export default function Navigator(props) {
+  const location = useLocation();
+  const [authenticated, setAuthenticated] = createSignal(isAuthenticated());
 
   // Get username if logged in
   const username = () => getUser()?.username;
 
+  // Re-check auth state whenever location changes
+  createEffect(() => {
+    location.pathname; 
+    setAuthenticated(isAuthenticated());
+  });
+
   const logout = () => {
     clearAuthData();
+    setAuthenticated(false);
     window.location.href = "/";
   };
 
@@ -111,7 +120,7 @@ export default function Navigator(props) {
         </NavigationMenuItem>
 
         <div className="flex flex-row-reverse">
-          {isAuthenticated() && (
+          {authenticated() && (
             <NavigationMenuItem>
               <NavigationMenuTrigger className="gap-3">
                 <CoffeeOutlinedIcon color="#5a5f73" />
@@ -135,13 +144,13 @@ export default function Navigator(props) {
             </NavigationMenuItem>
           )}
 
-          <A href={isAuthenticated() ? "#" : "/auth"}>
+          <A href={authenticated() ? "#" : "/auth"}>
             <Button
-              onClick={isAuthenticated() ? logout : undefined}
+              onClick={authenticated() ? logout : undefined}
               className="bg-slate-900 text-white hover:bg-slate-800 ml-2"
             >
               <LoginOutlinedIcon color="#ffffff" />
-              {isAuthenticated() ? "Logout" : "Login"}
+              {authenticated() ? "Logout" : "Login"}
             </Button>
           </A>
         </div>

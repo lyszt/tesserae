@@ -3,6 +3,8 @@ defmodule TesseraeServer.Accounts.Account do
   import Ecto.Changeset
   alias TesseraeServer.Accounts.{PermissionGroup, Profile}
 
+  @derive {Jason.Encoder, except: [:permission_group, :tokens, :posts, :profile]}
+
   schema "accounts" do
     field :username, :string
     field :email, :string

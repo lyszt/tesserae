@@ -2,6 +2,8 @@ defmodule TesseraeServer.Accounts.PermissionGroup do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, except: [ :accounts ]}
+
   schema "permission_groups" do
     field :name, :string
     field :description, :string
