@@ -30,7 +30,7 @@ defmodule TesseraeServer.Accounts do
       case %Account{} |> Account.changeset(attrs) |> Repo.insert() do
         {:ok, account} ->
           # create an empty profile linked to the new account. rollback on failure
-          case Profiles.create_profile(%{account_id: account.id, fullname: account.username || ""}) do
+          case Profiles.create_profile(%{account_id: account.id, fullname: account.fullname || account.username}) do
             {:ok, _profile} ->
               account
             {:error, reason} ->

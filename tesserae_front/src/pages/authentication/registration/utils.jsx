@@ -2,8 +2,8 @@ import { network, setAuthData } from '../../../utils/api'
 import { NetworkError } from '../../../lib/network/Network'
 
 // Registra novo usuário e faz login automático
-async function sendRegisterData(username, password, email) {
-    const payload = { username: username || '', password: password || '', email: email || '' }
+async function sendRegisterData(username, password, email, fullname) {
+    const payload = { username: username || '', password: password || '', email: email || '', fullname: fullname || '' }
     try {
         // Envia requisição POST para endpoint de registro
         const response = await network.post('auth/register/', payload)

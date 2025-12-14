@@ -20,7 +20,7 @@ export default function RegisterScreen({showRegister, setShowRegister, setAuth, 
 	async function handleSubmit(e) {
 		e.preventDefault()
 		setErrorMessage('')
-		const res = await sendRegisterData(username(), password(), email())
+		const res = await sendRegisterData(username(), password(), email(), fullname())
 		if (!res?.success) {
 			setErrorMessage(res?.message)
 			return res
