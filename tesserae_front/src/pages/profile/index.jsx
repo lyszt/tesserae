@@ -48,11 +48,13 @@ export default function Profile() {
       <div className="pt-[6%]"> </div>
       {hasLoaded() ?
 
-        <div className="w-full h-[10%] flex justify-start 
-      items-center p-10 bg-gray-100 gap-5">
+        <div className="w-full h-[10%] flex flex-col justify-start 
+      items-start p-10 bg-gray-100 gap-5">
           <div className="bg-gray-200 rounded-full h-[3vw] w-[3vw] "> </div>
           {fullName()}
+          <Button className="pl-[2%] pr-[2%]">Edit profile</Button>
         </div>
+
         : <span>Failed to load profile. </span>
 
       }
