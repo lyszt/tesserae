@@ -1,5 +1,7 @@
 import { getUser, getAuthenticatedNetwork } from "/src/utils/api.js";
 import { createSignal, createEffect, onCleanup } from "solid-js"
+import { Button } from "@/components/ui/button";
+
 
 export default function Profile() {
   const userData = getUser();
@@ -44,7 +46,7 @@ export default function Profile() {
   return (
     <section>
       <div className="pt-[6%]"> </div>
-      {hasLoaded ?
+      {hasLoaded() ?
 
         <div className="w-full h-[10%] flex justify-start 
       items-center p-10 bg-gray-100 gap-5">
