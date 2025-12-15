@@ -1,21 +1,24 @@
 import { getUser, getAuthenticatedNetwork, checkUsernameOwnership } from "/src/utils/api.js";
-import { createSignal, createEffect, onCleanup } from "solid-js"
+import { createSignal, createEffect, onCleanup, Show, onMount } from "solid-js"
 import { Button } from "@/components/ui/button";
+import ProfileNotFound from "./ProfileNotFound";
 
 
 export default function Profile({ username }) {
-  const userData = getUser();
-  const loggedInUsername = userData?.username;
   let [hasLoaded, setHasLoaded] = createSignal(true);
   let [profile, setProfile] = createSignal({});
   let [fullName, setFullName] = createSignal("");
   let [isOwner, setisOwner] = createSignal(false);
+  let [isClient, setIsClient] = createSignal(false);
 
-
-  // console.log(userData);
+  onMount(() => {
+    setIsClient(true);
+  });
 
   // Get profile data 
   createEffect(() => {
+    if (!isClient()) return;
+    
     const controller = new AbortController();
 
     (async () => {
@@ -48,26 +51,18 @@ export default function Profile({ username }) {
   return (
     <section>
       <div className="pt-[6%]"> </div>
-      {hasLoaded() ?
-
+      <Show when={hasLoaded()} fallback={<ProfileNotFound/>}>
         <div className="w-full h-[10%] flex flex-col justify-start 
       items-start p-10 bg-gray-100 gap-5">
           <div className="bg-gray-200 rounded-full h-[3vw] w-[3vw] "> </div>
           {fullName()}
-          {isOwner? 
-          <div className="flex w-full flex-col">
-          <Button className="pl-[2%] pr-[2%] w-[8%]">Edit profile</Button>
-          </div>
-           :
-            ""
-          }
-
+          <Show when={isOwner()}>
+            <div className="flex w-full flex-col">
+              <Button className="pl-[2%] pr-[2%] w-[8%]">Edit profile</Button>
+            </div>
+          </Show>
         </div>
-
-        : <span>Failed to load profile. </span>
-
-      }
-
+      </Show>
     </section>
   );
 }
