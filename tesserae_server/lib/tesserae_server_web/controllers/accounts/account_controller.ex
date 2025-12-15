@@ -126,4 +126,31 @@ defmodule TesseraeServerWeb.Accounts.AccountController do
         })
     end
   end
+
+  def check_username_match(conn, params) do
+    case get_req_header(conn, "authorization") do
+      ["Bearer " <> token_hash] ->
+        case Tokens.get_token_by_hash(token_hash) do
+          {:ok, token} ->
+            if Tokens.valid_token?(token) do
+              is_match = token.account.username == params["username"]
+              conn
+              |> put_status(:ok)
+              |> json(%{is_owner: is_match})
+            else
+              conn
+              |> put_status(:ok)
+              |> json(%{is_owner: false})
+            end
+          _ ->
+            conn
+            |> put_status(:ok)
+            |> json(%{is_owner: false})
+        end
+      _ ->
+        conn
+        |> put_status(:ok)
+        |> json(%{is_owner: false})
+    end
+  end
 end

@@ -30,7 +30,7 @@ defmodule TesseraeServerWeb.Router do
        post("/register", Accounts.AccountController, :create)
        post("/login", Accounts.AccountController, :login)
        post("/validate", Tokens.TokenController, :validate)
-
+       get("/check-username", Accounts.AccountController, :check_username_match)
      end
   end
 

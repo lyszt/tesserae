@@ -1,15 +1,15 @@
-import { getUser, getAuthenticatedNetwork } from "/src/utils/api.js";
+import { getUser, getAuthenticatedNetwork, checkUsernameOwnership } from "/src/utils/api.js";
 import { createSignal, createEffect, onCleanup } from "solid-js"
 import { Button } from "@/components/ui/button";
 
 
-export default function Profile() {
+export default function Profile({ username }) {
   const userData = getUser();
-  const userId = userData?.id;
-  const username = userData?.username;
+  const loggedInUsername = userData?.username;
   let [hasLoaded, setHasLoaded] = createSignal(true);
   let [profile, setProfile] = createSignal({});
   let [fullName, setFullName] = createSignal("");
+  let [isOwner, setisOwner] = createSignal(false);
 
 
   // console.log(userData);
@@ -22,13 +22,15 @@ export default function Profile() {
       try {
         const network = getAuthenticatedNetwork();
         const response = await network.get("profile", {
-          params: { userId },
+          params: { username },
           signal: controller.signal
         });
 
         if (response.status === 200) {
           setProfile(response.body.profile);
           setFullName(profile().fullname);
+          const isOwner = await checkUsernameOwnership(username);
+          setisOwner(isOwner);
           // console.log(response.body);
         }
       } catch (error) {
@@ -52,9 +54,14 @@ export default function Profile() {
       items-start p-10 bg-gray-100 gap-5">
           <div className="bg-gray-200 rounded-full h-[3vw] w-[3vw] "> </div>
           {fullName()}
+          {isOwner? 
           <div className="flex w-full flex-col">
           <Button className="pl-[2%] pr-[2%] w-[8%]">Edit profile</Button>
           </div>
+           :
+            ""
+          }
+
         </div>
 
         : <span>Failed to load profile. </span>

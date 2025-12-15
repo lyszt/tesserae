@@ -99,3 +99,17 @@ export async function validateToken() {
 export function getApiBaseUrl() {
     return API_BASE_URL
 }
+
+// Verifica se o usuário autenticado é o dono do perfil
+export async function checkUsernameOwnership(username) {
+    try {
+        const authNetwork = getAuthenticatedNetwork();
+        const response = await authNetwork.get("/auth/check-username", {
+            params: { username }
+        });
+        return response?.body?.is_owner || false;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
