@@ -26,7 +26,7 @@ export default function ProfileNotFound({ username }) {
             Profile Not Found
           </h2>
           <p className="text-slate-500 text-lg italic">
-            {username}? Who is that?
+            <strong>{username}?</strong><br/> Who is that?
           </p>
           <p className="text-slate-600">
             This profile seems to have wandered off somewhere...
