@@ -144,7 +144,9 @@ export default function Navigator(props) {
             </NavigationMenuItem>
           )}
 
-          <A href={authenticated() ? "#" : "/auth"}>
+          
+        </div>
+        <A href={authenticated() ? "#" : "/auth"}>
             <Button
               onClick={authenticated() ? logout : undefined}
               className="bg-slate-900 text-white hover:bg-slate-800 ml-2"
@@ -153,7 +155,6 @@ export default function Navigator(props) {
               {authenticated() ? "Logout" : "Login"}
             </Button>
           </A>
-        </div>
       </NavigationMenuList>
     </NavigationMenu>
   );

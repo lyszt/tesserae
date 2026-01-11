@@ -7,7 +7,7 @@ const ItemContext = createContext()
 
 function NavigationMenu({ className, children, viewport = true, ...props }) {
   return (
-    <nav data-slot="navigation-menu" className={cn("relative flex shadow-sm shadow-gray-100 w-[80%] m-auto mt-[1%] rounded-2xl border border-gray-100 p-2 flex-1 items-center justify-center", className)} {...props}>
+    <nav data-slot="navigation-menu" className={cn("relative flex shadow-sm shadow-gray-100 w-[90%] m-auto mt-[1%] rounded-2xl border border-gray-100 p-2 flex-1 items-center justify-center", className)} {...props}>
       {children}
       {viewport && <NavigationMenuViewport />}
     </nav>
